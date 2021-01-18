@@ -34,3 +34,26 @@
   =exwm-outer-gaps-increment= and =exwm-outer-gaps-balance=, which respectively
   increment all four gaps at the same time, decrement all for gaps and balance all
   four gaps to be the same width (in case gaps where changed to not be all equal).
+
+* Installation
+
+  I might go the extra mile and submit it to MELPA someday, but in the meantime
+  I suggest using straight. I personally use Doom Emacs, which has its own
+  package manager based on straight. I have the following in my configuration:
+
+  #+begin_src emacs-lisp :tangle no
+;; in packages.el
+(package! exwm-outer-gaps
+  :recipe
+  (:host github
+   :repo "lucasgruss/exwm-outer-gaps"))
+
+;; in config.el
+(use-package exwm-outer-gaps
+  :after (exwm xelb)
+  :config
+  (exwm-outer-gaps-mode +1))
+  #+end_src
+
+  I also bind =exwm-outer-gaps-mode= to a keybinding in order to easily toggle
+  the mode.
