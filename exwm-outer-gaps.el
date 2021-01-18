@@ -2,6 +2,7 @@
 (require 'exwm-workspace)
 (require 'exwm-core)
 (require 'exwm)
+(require 'xelb)
 
 (defgroup exwm-outer-gaps nil
   "Outer gaps for exwm."
