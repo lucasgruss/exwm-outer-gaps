@@ -11,7 +11,7 @@
  rather easy. If the code sucks, don't hesitate to open an issue and tell me
  why (in fact, please do !).
 
-[[img:screenshot.png][I think it looks nice]]
+[[screenshot.png]]
 
 * How it works
 
