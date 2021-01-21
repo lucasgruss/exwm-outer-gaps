@@ -7,33 +7,14 @@
  pretty but most importantly *it is a feature*. And therefore Emacs must have
  it. Sorry, I don't make the rules.
 
- It's my first elisp package, and I wanted to try my hand on something
+ This package provides a minor mode to have outer gaps around the workspaces,
+ and some utility functions to control them.
+
+ It's my first elisp package, and I wanted to try my hand at something
  rather easy. If the code sucks, don't hesitate to open an issue and tell me
  why (in fact, please do !).
 
 [[screenshot.png]]
-
-* How it works
-
-  There is nothing to write home about, exwm comes with all the facility to
-  implement this. For each exwm workspace (i.e. non-floating frame), there is a
-  workarea that sets its geometry. Usually, each workarea takes up the whole
-  screen/monitor but exwm provides =exwm-workspace--update-workareas-hooks= that
-  we can use to add gaps.
-
-  Since we only have control over the geometry of the frame, the gaps provided
-  by this package are only "outer gaps", which means that "inner gaps" (gaps
-  between emacs windows) is out of scope for this package. I do intend to write
-  a package for inner gaps in the future by leveraging =window-divider-mode= and
-  =xcb-shape= from =xelb=.
-
-  Each side (left, right, top and bottom) has its own gap, so there is some
-  level of granularity available.
-
-  There are three user-facing functions that are =exwm-outer-gaps-increment=,
-  =exwm-outer-gaps-increment= and =exwm-outer-gaps-balance=, which respectively
-  increment all four gaps at the same time, decrement all for gaps and balance all
-  four gaps to be the same width (in case gaps where changed to not be all equal).
 
 * Installation
 
@@ -56,4 +37,37 @@
   #+end_src
 
   I also bind =exwm-outer-gaps-mode= to a keybinding in order to easily toggle
-  the mode.
+  the mode and change dimensions of the gaps.
+
+ #+begin_src emacs-lisp :tangle no
+;; in your config for exwm, you can adapt exwm-input-global-keys
+(setq exwm-input-global-keys
+      `( ;; ...
+        ([?\s-O]  . exwm-outer-gaps-mode)
+        ([?\s-p]  . exwm-outer-gaps-increment)
+        ([?\s-y]  . exwm-outer-gaps-decrement)
+        ;; ...
+        ))
+ #+end_src
+
+* How it works
+
+  There is nothing to write home about, exwm comes with all the facility to
+  implement this. For each exwm workspace (i.e. non-floating frame), there is a
+  workarea that sets its geometry. Usually, each workarea takes up the whole
+  screen/monitor but exwm provides =exwm-workspace--update-workareas-hooks= that
+  we can use to add gaps.
+
+  Since we only have control over the geometry of the frame, the gaps provided
+  by this package are only "outer gaps", which means that "inner gaps" (gaps
+  between emacs windows) is out of scope for this package. I do intend to write
+  a package for inner gaps in the future by leveraging =window-divider-mode= and
+  =xcb-shape= from =xelb=.
+
+  Each side (left, right, top and bottom) has its own gap, so there is some
+  level of granularity available.
+
+  There are three user-facing functions that are =exwm-outer-gaps-increment=,
+  =exwm-outer-gaps-decrement= and =exwm-outer-gaps-balance=, which respectively
+  increment all four gaps at the same time, decrement all four gaps and balance all
+  four gaps to be the same width (in case gaps where changed to not be all equal).
