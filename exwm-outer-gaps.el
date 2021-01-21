@@ -65,7 +65,7 @@ should be used as absolute width or as increment value"
     (exwm-outer-gaps-apply)))
 
 (defun exwm-outer-gaps-balance (border)
-  "Set all gaps to the same width"
+  "Set all gaps to the width of border"
   (interactive "P")
   (exwm-outer-gaps-set-all (aref exwm-outer-gaps-width border) nil)
   (exwm-outer-gaps-apply))
