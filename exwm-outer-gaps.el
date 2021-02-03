@@ -75,7 +75,9 @@ exwm-outer-gaps-increment-step"
 (defun exwm-outer-gaps-balance (border)
   "Set all gaps to the width of border"
   (interactive "P")
-  (exwm-outer-gaps-set-all (aref exwm-outer-gaps-width border) nil)
+  (if border
+      (exwm-outer-gaps-set-all (aref exwm-outer-gaps-width border) nil)
+    (exwm-outer-gaps-set-all (aref exwm-outer-gaps-width 0) nil))
   (exwm-outer-gaps-apply))
 
 ;;;###autoload
