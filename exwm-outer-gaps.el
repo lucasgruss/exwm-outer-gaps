@@ -49,19 +49,27 @@ should be used as absolute width or as increment value"
     (exwm-outer-gaps-set border width increment)))
 
 (defun exwm-outer-gaps-increment (arg)
-  "Increment the outer gaps"
+  "Increment the outer gaps. If arg {0, 1, 2, 3} is passed,
+increment the corresponding {left, right, top, bottom} border.
+Else, increment all borders by the same
+exwm-outer-gaps-increment-step"
   (interactive "P")
   (when exwm-outer-gaps-mode
-    (let ((new-value (if arg arg exwm-outer-gaps-increment-step)))
-      (exwm-outer-gaps-set-all new-value t))
+    (if arg
+        (exwm-outer-gaps-set arg exwm-outer-gaps-increment-step t)
+      (exwm-outer-gaps-set-all exwm-outer-gaps-increment-step t))
     (exwm-outer-gaps-apply)))
 
 (defun exwm-outer-gaps-decrement (arg)
-  "Decrement the outer gaps"
+  "Decrement the outer gaps. If arg {0, 1, 2, 3} is passed,
+decrement the corresponding {left, right, top, bottom} border.
+Else, decrement all borders by the same
+exwm-outer-gaps-increment-step"
   (interactive "P")
   (when exwm-outer-gaps-mode
-    (let ((new-value (if arg arg exwm-outer-gaps-increment-step)))
-      (exwm-outer-gaps-set-all (- new-value) t))
+    (if arg
+        (exwm-outer-gaps-set arg (- exwm-outer-gaps-increment-step) t)
+      (exwm-outer-gaps-set-all (- exwm-outer-gaps-increment-step) t))
     (exwm-outer-gaps-apply)))
 
 (defun exwm-outer-gaps-balance (border)
