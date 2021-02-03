@@ -20,10 +20,10 @@
   "Hook to be ran after exwm-workspace--update-workareas-hook"
   (let (workareas frames)
     (dolist (w exwm-workspace--workareas)
-      (setf (aref w 0) (+ (aref w 0) (aref exwm-outer-gaps-width 0))
-            (aref w 1) (+ (aref w 1) (aref exwm-outer-gaps-width 1))
-            (aref w 2) (- (aref w 2) (+ (aref exwm-outer-gaps-width 0) (aref exwm-outer-gaps-width 1)))
-            (aref w 3) (- (aref w 3) (+ (aref exwm-outer-gaps-width 2) (aref exwm-outer-gaps-width 3)))))))
+      (setf (aref w 0) (+ (aref w 0) (aref exwm-outer-gaps-width 0)) ; x for top left corner
+            (aref w 1) (+ (aref w 1) (aref exwm-outer-gaps-width 2)) ; y for top left corner
+            (aref w 2) (- (aref w 2) (+ (aref exwm-outer-gaps-width 0) (aref exwm-outer-gaps-width 1))) ; width of frame
+            (aref w 3) (- (aref w 3) (+ (aref exwm-outer-gaps-width 2) (aref exwm-outer-gaps-width 3))))))) ; height of frame
 
 (defun exwm-outer-gaps-apply ()
   "Function used to apply gaps to the emacs frames."
