@@ -3,18 +3,18 @@
 
 * Introduction
 
- A lot of window managers provide a feature called "gaps". It is useless, it is
- pretty but most importantly *it is a feature*. And therefore Emacs must have
- it. Sorry, I don't make the rules.
+  A lot of window managers provide a feature called "gaps". It is useless, it is
+  pretty but most importantly *it is a feature*. And therefore Emacs must have
+  it. Sorry, I don't make the rules.
 
- This package provides a minor mode to have outer gaps around the workspaces,
- and some utility functions to control them.
+  This package provides a minor mode to have outer gaps around the workspaces,
+  and some utility functions to control them.
 
- It's my first elisp package, and I wanted to try my hand at something
- rather easy. If the code sucks, don't hesitate to open an issue and tell me
- why (in fact, please do !).
+  It's my first elisp package, and I wanted to try my hand at something
+  rather easy. If the code sucks, don't hesitate to open an issue and tell me
+  why (in fact, please do !).
 
-[[screenshot.png]]
+  [[screenshot.png]]
 
 * Installation
 
@@ -39,7 +39,7 @@
   I also bind =exwm-outer-gaps-mode= to a keybinding in order to easily toggle
   the mode and change dimensions of the gaps.
 
- #+begin_src emacs-lisp :tangle no
+  #+begin_src emacs-lisp
 ;; in your config for exwm, you can adapt exwm-input-global-keys
 (setq exwm-input-global-keys
       `( ;; ...
@@ -48,7 +48,33 @@
         ([?\s-y]  . exwm-outer-gaps-decrement)
         ;; ...
         ))
- #+end_src
+  #+end_src
+
+  Each gap can be set/incremented individually. In my configuration, I also
+  leverage [[https://gitlab.com/jjzmajic/hercules.el][hercules.el]] in order to create a "menu" that can be invoked to set each
+  gap interactively.
+
+  #+begin_src emacs-lisp
+(defvar exwm-outer-gaps-keymap nil
+  "keymap to resize gaps")
+(setq exwm-outer-gaps-keymap (make-sparse-keymap))
+
+;; map! is a doom specific macro
+(map! (:map exwm-outer-gaps-keymap
+       :desc "Decrease left" "h" (lambda () (interactive) (exwm-outer-gaps-decrement 0))
+       :desc "Increase left" "H" (lambda () (interactive) (exwm-outer-gaps-increment 0))
+       :desc "Decrease right" "l" (lambda () (interactive) (exwm-outer-gaps-decrement 1))
+       :desc "Increase right" "L" (lambda () (interactive) (exwm-outer-gaps-increment 1))
+       :desc "Decrease top" "k" (lambda () (interactive) (exwm-outer-gaps-decrement 2))
+       :desc "Increase top" "K" (lambda () (interactive) (exwm-outer-gaps-increment 2))
+       :desc "Decrease bottom" "j" (lambda () (interactive) (exwm-outer-gaps-decrement 3))
+       :desc "Increase bottom" "J" (lambda () (interactive) (exwm-outer-gaps-increment 3))))
+
+(hercules-def
+ :toggle-funs (defun lg/exwm-outer-gaps-menu () (interactive))
+ :keymap 'exwm-outer-gaps-keymap
+ :transient t)
+  #+end_src
 
 * How it works
 
